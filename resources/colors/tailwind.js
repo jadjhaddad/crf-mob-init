@@ -11,7 +11,7 @@ const green = {
   800: "#0C3D31",
   900: "#0C3D31",
   950: "#012C28",
-}
+};
 const neutral = {
   DEFAULT: "#15171B",
   50: "#fafafa",
@@ -25,7 +25,7 @@ const neutral = {
   800: "#202020",
   900: "#15171B",
   950: "#0a0a0a",
-}
+};
 const red = {
   DEFAULT: "#dc2626",
   50: "#fef2f2",
@@ -39,7 +39,7 @@ const red = {
   800: "#991b1b",
   900: "#7f1d1d",
   950: "#450a0a",
-}
+};
 const orange = {
   DEFAULT: "#f97316",
   50: "#fff7ed",
@@ -53,7 +53,7 @@ const orange = {
   800: "#9a3412",
   900: "#7c2d12",
   950: "#431407",
-}
+};
 const blue = {
   DEFAULT: "#3b82f6",
   50: "#eff6ff",
@@ -67,29 +67,18 @@ const blue = {
   800: "#1e40af",
   900: "#1e3a8a",
   950: "#172554",
-}
+};
 
 module.exports = {
-  primary: green.DEFAULT,
-  danger: red.DEFAULT,
-  success: green.DEFAULT,
-  warning: orange.DEFAULT,
-  info: blue[400],
-  white: "#ffffff",
-  black: "#000",
-  surface: neutral.DEFAULT,
-  transparent: "transparent",
-  outline: neutral[400],
-  disabled: "#F2F2F2",
-  "dark-disabled": "#8888881f",
-  placeholder: "#73737360",
-  glass: "#00000025",
-  "glass-variant": "#ffffff1f",
-  "glass-dark": "#00000070",
-  gray: neutral[300],
+  primary: "#589EFD",
+  placeholder: "#9FABC6",
+  shadowColor: "#B8BABE",
+  background: "#F7F9FC",
+  borderColor: "#E5EAF5",
+  blue,
   green,
   neutral,
   orange,
   red,
   blue,
-}
+};

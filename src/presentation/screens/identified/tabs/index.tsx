@@ -5,20 +5,26 @@ import {
   RouteProp,
 } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { AllScreensParamList } from "../all";
 import HomeTab from "./HomeTab";
 import {
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
-  View,
 } from "react-native";
-import { useMemo } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import AgendaTab from "./AgendaTab";
 import MyQRTab from "./MyQRTab";
 import PatientsTab from "./PatientsTab";
 import ProfileTab from "./ProfileTab";
-// TODO: Add icon library - @untitledui/icons not compatible with React Native
+import HomeIcon from "@/resources/icons/HomeIcon";
+import CalendarIcon from "@/resources/icons/CalendarIcon";
+import QRIcon from "@/resources/icons/QRIcon";
+import PatientsIcon from "@/resources/icons/PatientsIcon";
+import ProfileIcon from "@/resources/icons/ProfileIcon";
+import CustomText from "@/src/presentation/components/common/CustomText";
+import colors from "@/resources/colors/tailwindExport";
 
 export type BottomTabParamList = {
   HomeTab: NavigatorScreenParams<AllScreensParamList>;
@@ -44,23 +50,50 @@ export type BottomTabProp<ScreenName extends keyof BottomTabParamList> = {
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-const IconContainer: React.FC<TouchableOpacityProps> = ({
+interface IconContainerProps extends TouchableOpacityProps {
+  label: string;
+  icon: (color: string, size: number) => ReactNode;
+  isFocused?: boolean;
+}
+
+const IconContainer: React.FC<IconContainerProps> = ({
+  icon,
+  label,
   style,
-  children,
+  isFocused = false,
   ...props
 }) => {
   const flattenedStyle = useMemo(() => StyleSheet.flatten(style), [style]);
+  const [containerHeight, setContainerHeight] = useState(2);
+
   return (
     <TouchableOpacity
       {...props}
+      className={isFocused ? "bg-primary/10" : "bg-transparent"}
       style={{
-        justifyContent: "center",
         flex: 1,
+        borderRadius: containerHeight * 0.156,
+        justifyContent: "center",
         alignItems: "center",
+        marginVertical: "12%",
+        marginHorizontal: "0.2%",
         ...flattenedStyle,
       }}
+      onLayout={(t) => setContainerHeight(t.nativeEvent.layout.height)}
     >
-      {children}
+      {icon?.(
+        isFocused ? colors.primary : colors.placeholder,
+        containerHeight * 0.395,
+      )}
+      <CustomText
+        style={{
+          marginTop: containerHeight * 0.107,
+          fontSize: containerHeight * 0.166,
+        }}
+        className={`${isFocused ? "text-primary" : "text-placeholder"}`}
+      >
+        {label}
+      </CustomText>
     </TouchableOpacity>
   );
 };
@@ -73,107 +106,112 @@ const BottomTabNavigator = () => {
         headerShown: false,
         headerShadowVisible: false,
         tabBarStyle: {
-          display: shouldHideTab(route) ? "none" : undefined,
-          elevation: 2,
           position: "absolute",
           bottom: 40,
-          width: "95%",
+          display: shouldHideTab(route) ? "none" : undefined,
+          shadowColor: colors.shadowColor,
+          height: "8.3%",
+          width: "95.7%",
+          marginLeft: "2.15%",
+          elevation: 4,
           alignSelf: "center",
-          marginLeft: "2.5%",
           borderRadius: 8,
           paddingBottom: 0,
+          paddingHorizontal: "2.22%",
+          borderTopWidth: 0,
         },
       })}
     >
       <BottomTab.Screen
         name="HomeTab"
         component={HomeTab}
-        options={{
-          tabBarButton: (props) => (
-            <IconContainer onPress={props.onPress}>
-              <View
-                style={{
-                  borderRadius: 100,
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "green",
-                }}
+        options={({ navigation }) => ({
+          tabBarButton: (props) => {
+            const isFocused = navigation.isFocused();
+            return (
+              <IconContainer
+                onPress={props.onPress}
+                icon={(color, size) => <HomeIcon size={size} color={color} />}
+                label="HOME"
+                isFocused={isFocused}
               />
-            </IconContainer>
-          ),
-        }}
+            );
+          },
+        })}
       />
       <BottomTab.Screen
         name="AgendaTab"
         component={AgendaTab}
-        options={{
-          tabBarButton: (props) => (
-            <IconContainer onPress={props.onPress}>
-              <View
-                style={{
-                  borderRadius: 100,
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "red",
-                }}
+        options={({ navigation }) => ({
+          tabBarButton: (props) => {
+            const isFocused = navigation.isFocused();
+            return (
+              <IconContainer
+                onPress={props.onPress}
+                icon={(color, size) => (
+                  <CalendarIcon size={size} color={color} />
+                )}
+                label="AGENDA"
+                isFocused={isFocused}
               />
-            </IconContainer>
-          ),
-        }}
+            );
+          },
+        })}
       />
       <BottomTab.Screen
         name="MyQRTab"
         component={MyQRTab}
-        options={{
-          tabBarButton: (props) => (
-            <IconContainer onPress={props.onPress}>
-              <View
-                style={{
-                  borderRadius: 100,
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "red",
-                }}
+        options={({ navigation }) => ({
+          tabBarButton: (props) => {
+            const isFocused = navigation.isFocused();
+            return (
+              <IconContainer
+                onPress={props.onPress}
+                icon={(color, size) => <QRIcon size={size} color={color} />}
+                label="MY QR CODE"
+                isFocused={isFocused}
               />
-            </IconContainer>
-          ),
-        }}
+            );
+          },
+        })}
       />
       <BottomTab.Screen
         name="PatientsTab"
         component={PatientsTab}
-        options={{
-          tabBarButton: (props) => (
-            <IconContainer onPress={props.onPress}>
-              <View
-                style={{
-                  borderRadius: 100,
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "red",
-                }}
+        options={({ navigation }) => ({
+          tabBarButton: (props) => {
+            const isFocused = navigation.isFocused();
+            return (
+              <IconContainer
+                onPress={props.onPress}
+                icon={(color, size) => (
+                  <PatientsIcon size={size} color={color} />
+                )}
+                label="PATIENTS"
+                isFocused={isFocused}
               />
-            </IconContainer>
-          ),
-        }}
+            );
+          },
+        })}
       />
       <BottomTab.Screen
         name="ProfileTab"
         component={ProfileTab}
-        options={{
-          tabBarButton: (props) => (
-            <IconContainer onPress={props.onPress}>
-              <View
-                style={{
-                  borderRadius: 100,
-                  width: 30,
-                  height: 30,
-                  backgroundColor: "red",
-                }}
+        options={({ navigation }) => ({
+          tabBarButton: (props) => {
+            const isFocused = navigation.isFocused();
+            return (
+              <IconContainer
+                onPress={props.onPress}
+                icon={(color, size) => (
+                  <ProfileIcon size={size} color={color} />
+                )}
+                label="PROFILE"
+                isFocused={isFocused}
               />
-            </IconContainer>
-          ),
-        }}
+            );
+          },
+        })}
       />
     </BottomTab.Navigator>
   );

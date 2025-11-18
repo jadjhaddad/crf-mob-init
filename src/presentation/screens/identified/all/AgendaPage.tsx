@@ -1,8 +1,9 @@
 import { View } from "react-native";
 import { AllScreenConfig, AllScreensProps } from ".";
+import CustomScrollView from "@/src/presentation/components/common/CustomScrollView";
 
 const AgendaPage: React.FC<AllScreensProps<"AgendaPage">> = () => {
-  return <View style={{ flex: 1, backgroundColor: "white" }}></View>;
+  return <CustomScrollView></CustomScrollView>;
 };
 
 const AgendaPageConfig: AllScreenConfig<"AgendaPage"> = {
@@ -10,7 +11,6 @@ const AgendaPageConfig: AllScreenConfig<"AgendaPage"> = {
   component: AgendaPage,
   options: {
     title: "Agenda",
-    headerShadowVisible: false,
   },
 };
 

@@ -1,3 +1,5 @@
+const colors = require("./resources/colors/tailwind")
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,8 +11,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        primary: '#00854A',
+      colors,
+      fontFamily: {
+        regular: ['Karla-Regular'],
+        medium: ['Karla-Medium'],
+        semibold: ['Karla-SemiBold'],
+        bold: ['Karla-Bold'],
+        light: ['Karla-Light'],
+        italic: ['Karla-Italic'],
       },
     },
   },

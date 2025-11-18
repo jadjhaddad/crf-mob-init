@@ -1,8 +1,13 @@
 import { View } from "react-native";
 import { AllScreenConfig, AllScreensProps } from ".";
+import CustomScrollView from "@/src/presentation/components/common/CustomScrollView";
 
 const MyQRPage: React.FC<AllScreensProps<"MyQRPage">> = () => {
-  return <View style={{ flex: 1, backgroundColor: "white" }}></View>;
+  return (
+    <CustomScrollView
+      style={{ flex: 1, backgroundColor: "white" }}
+    ></CustomScrollView>
+  );
 };
 
 const MyQRPageConfig: AllScreenConfig<"MyQRPage"> = {
@@ -10,7 +15,6 @@ const MyQRPageConfig: AllScreenConfig<"MyQRPage"> = {
   component: MyQRPage,
   options: {
     title: "QR",
-    headerShadowVisible: false,
   },
 };
 

@@ -1,8 +1,9 @@
 import { View } from "react-native";
 import { AllScreenConfig, AllScreensProps } from ".";
+import CustomScrollView from "@/src/presentation/components/common/CustomScrollView";
 
 const ProfilePage: React.FC<AllScreensProps<"ProfilePage">> = () => {
-  return <View style={{ flex: 1, backgroundColor: "white" }}></View>;
+  return <CustomScrollView></CustomScrollView>;
 };
 
 const ProfilePageConfig: AllScreenConfig<"ProfilePage"> = {
@@ -10,7 +11,6 @@ const ProfilePageConfig: AllScreenConfig<"ProfilePage"> = {
   component: ProfilePage,
   options: {
     title: "Profile",
-    headerShadowVisible: false,
   },
 };
 
